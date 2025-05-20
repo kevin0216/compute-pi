@@ -1,5 +1,4 @@
 #include "computepi.h"
-#include <immintrin.h>
 #include <math.h>
 #include <omp.h>
 #include <stdio.h>
@@ -20,9 +19,9 @@ double compute_pi_openmp(size_t N, int threads)
     double pi = 0.0;
     double dt = 1.0 / N;
     double x;
-#pragma omp parallel num_threads(threads)
+// TODO: Add OpenMP stuff here to create a parallel environment
     {
-#pragma omp for private(x) reduction(+ : pi)
+// TODO: Add proper OpenMP for the parameter to speed up the for iteration and prevent data racing
         for (size_t i = 0; i < N; i++) {
             x = (double) i / N;
             pi += dt / (1.0 + x * x);

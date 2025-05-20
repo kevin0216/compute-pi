@@ -10,12 +10,11 @@ int main(int argc, char const *argv[])
     pi = compute_pi_baseline(N);
 #endif
 
-#if defined(OPENMP_2)
-    pi = compute_pi_openmp(N, 2);
-#endif
-
-#if defined(OPENMP_4)
-    pi = compute_pi_openmp(N, 4);
+#if defined(OPENMP)
+    // TODO: Modify here to get better performance, examining the best value by yourself!
+    int thread = 2;
+    printf("Thread = %d\n", thread);
+    pi = compute_pi_openmp(N, thread);
 #endif
     printf("N = %d , pi = %lf\n", N, pi);
 

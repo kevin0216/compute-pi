@@ -1,8 +1,7 @@
 CC = gcc
-CFLAGS = -O0 -std=gnu99 -Wall -fopenmp -mavx
+CFLAGS = -O0 -std=gnu99 -Wall -fopenmp
 EXECUTABLE = \
-	time_test_baseline time_test_openmp_2 time_test_openmp_4 \
-	benchmark_clock_gettime methods_error_rate
+	time_test_baseline time_test_openmp
 
 GIT_HOOKS := .git/hooks/applied
 
@@ -13,12 +12,6 @@ $(GIT_HOOKS):
 	@echo
 
 default: $(GIT_HOOKS) $(EXECUTABLE)
-
-benchmark_clock_gettime: computepi.o benchmark_clock_gettime.c
-	$(CC) $(CFLAGS) $? -D$(METHOD) -o $@ -lm
-
-methods_error_rate: computepi.o methods_error_rate.c
-	$(CC) $(CFLAGS) $? -o $@ -lm
 
 time_test_%: computepi.o %_method.o
 	$(CC) $(CFLAGS) $? -o $@ -lm
@@ -33,8 +26,7 @@ time_test_%: computepi.o %_method.o
 
 check: default
 	time ./time_test_baseline
-	time ./time_test_openmp_2
-	time ./time_test_openmp_4
+	time ./time_test_openmp
 
 gencsv: default
 	for i in `seq 1008 4000 1000000`; do \
